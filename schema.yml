@@ -1,0 +1,318 @@
+openapi: 3.0.3
+info:
+  title: Simple staff management API
+  version: 1.0.0
+  description: Ptolemay test task
+paths:
+  /api/departments/:
+    get:
+      operationId: api_departments_list
+      description: |-
+        - API для получения списка департаментов (включает искусственное поле с числом
+        сотрудников + поле с суммарным окладам по всем сотрудникам)
+        - API со списком департаментов - без пагинации
+        - доступ к списку департаментов - доступен и для анонимных пользователей
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Department'
+          description: ''
+  /api/staff/:
+    get:
+      operationId: api_staff_list
+      description: |-
+        - API для получения списка сотрудников + реализовать фильтр для поиска по фамилии и по id департамента
+        - Добавление/удаление сотрудников через API
+        - API со списком сотрудников - с пагинацией
+        - Доступ к списку сотрудников - только для авторизованных пользователей
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - api
+      security:
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedStaffList'
+          description: ''
+    post:
+      operationId: api_staff_create
+      description: |-
+        - API для получения списка сотрудников + реализовать фильтр для поиска по фамилии и по id департамента
+        - Добавление/удаление сотрудников через API
+        - API со списком сотрудников - с пагинацией
+        - Доступ к списку сотрудников - только для авторизованных пользователей
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Staff'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Staff'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Staff'
+        required: true
+      security:
+      - basicAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Staff'
+          description: ''
+  /api/staff/{id}/:
+    get:
+      operationId: api_staff_retrieve
+      description: |-
+        - API для получения списка сотрудников + реализовать фильтр для поиска по фамилии и по id департамента
+        - Добавление/удаление сотрудников через API
+        - API со списком сотрудников - с пагинацией
+        - Доступ к списку сотрудников - только для авторизованных пользователей
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this staff.
+        required: true
+      tags:
+      - api
+      security:
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Staff'
+          description: ''
+    put:
+      operationId: api_staff_update
+      description: |-
+        - API для получения списка сотрудников + реализовать фильтр для поиска по фамилии и по id департамента
+        - Добавление/удаление сотрудников через API
+        - API со списком сотрудников - с пагинацией
+        - Доступ к списку сотрудников - только для авторизованных пользователей
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this staff.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Staff'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Staff'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Staff'
+        required: true
+      security:
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Staff'
+          description: ''
+    patch:
+      operationId: api_staff_partial_update
+      description: |-
+        - API для получения списка сотрудников + реализовать фильтр для поиска по фамилии и по id департамента
+        - Добавление/удаление сотрудников через API
+        - API со списком сотрудников - с пагинацией
+        - Доступ к списку сотрудников - только для авторизованных пользователей
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this staff.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedStaff'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedStaff'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedStaff'
+      security:
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Staff'
+          description: ''
+    delete:
+      operationId: api_staff_destroy
+      description: |-
+        - API для получения списка сотрудников + реализовать фильтр для поиска по фамилии и по id департамента
+        - Добавление/удаление сотрудников через API
+        - API со списком сотрудников - с пагинацией
+        - Доступ к списку сотрудников - только для авторизованных пользователей
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this staff.
+        required: true
+      tags:
+      - api
+      security:
+      - basicAuth: []
+      responses:
+        '204':
+          description: No response body
+components:
+  schemas:
+    Department:
+      type: object
+      properties:
+        name:
+          type: string
+        staff_count:
+          type: integer
+        total_salary:
+          type: integer
+      required:
+      - name
+      - staff_count
+      - total_salary
+    PaginatedStaffList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Staff'
+    PatchedStaff:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        first_name:
+          type: string
+          maxLength: 25
+        last_name:
+          type: string
+          maxLength: 25
+        middle_name:
+          type: string
+          maxLength: 25
+        position:
+          type: string
+          maxLength: 30
+        salary:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        age:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        department:
+          type: string
+    Staff:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        first_name:
+          type: string
+          maxLength: 25
+        last_name:
+          type: string
+          maxLength: 25
+        middle_name:
+          type: string
+          maxLength: 25
+        position:
+          type: string
+          maxLength: 30
+        salary:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        age:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        department:
+          type: string
+      required:
+      - age
+      - department
+      - first_name
+      - id
+      - last_name
+      - middle_name
+      - position
+      - salary
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
