@@ -1,7 +1,6 @@
 from django.db.models import Count, Sum
 from django.shortcuts import get_list_or_404
 from rest_framework import generics, viewsets, mixins
-from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.pagination import PageNumberPagination
 
